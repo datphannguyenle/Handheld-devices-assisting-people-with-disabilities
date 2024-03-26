@@ -1,0 +1,12 @@
+@startuml Hardware
+
+hardware_class <- network_class : Inheritance network class
+
+group Network class
+    network_class -> lan_class : Init LAN module
+    network_class -> wwan_class : Init WWAN module
+    network_class -> bluetooth_class : Init bluetooth
+end
+
+
+@enduml
