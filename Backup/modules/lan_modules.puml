@@ -1,0 +1,32 @@
+' Created on: Oct 21, 2023
+' Author: selina
+
+@startuml wwan module class
+
+group Init LAN
+    hardware -> lan_class : Init LAN modules 
+
+    group Get LAN information
+        lan_class -> wifimangement_linux_library : call function interface_status()
+        lan_class <- wifimangement_linux_library : LAN connection information
+        lan_class -> lan_class : save information into responce variable
+        lan_class -> lan_class : get connection tech
+        group If connect using Wifi
+            lan_class -> lan_class : get wifi's connection name
+            lan_class -> lan_class : get wifi signal quality
+        end
+        group If connect using Ethernet
+            lan_class -> lan_class : set signal to -2 (define for Ethernet connection)
+            lan_class -> lan_class : get Ethernet's connection name
+        end
+    end
+end
+
+group Get wifi signal quality (Use when connection tech is wifi)
+    lan_class -> terminal : send "iwconfig"
+    lan_class <- terminal : All LAN connection information
+    lan_class -> lan_class : Analysis and get signal(dBm)
+    lan_class -> lan_class : Change signal(dBm) to signal quality(percent)
+end
+
+@enduml

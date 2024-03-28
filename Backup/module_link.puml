@@ -1,0 +1,16 @@
+' Created on: Oct 10, 2023
+' Author: selina
+
+@startuml HAV Project module link
+
+main.py <-> Asssistant.py : Voice assistant module 
+main.py <-> hardware.py : All hardware's module control
+' main.py <- ai.py
+
+lan_modules.py <-> hardware.py : Wifi/Ethernet modules
+wwan_module.py <-> hardware.py : Extended wwan card
+bluetooth_module.py <-> hardware.py : Bluetooth module
+hardware.py <-> MCU.py : Recieve/send data from/to STM32
+' hardware <-> network : Module network connect to hardware 
+' mcu.py -> hardware.py
+@enduml

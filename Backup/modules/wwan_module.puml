@@ -1,0 +1,50 @@
+' Created on: Oct 17, 2023
+' Author: selina
+
+@startuml wwan module class
+' main -> hardware : init harware class
+
+group Init wwan module
+    hardware -> wwan_class : init wwan_class module request
+    
+    group Find wwan module
+        wwan_class -> terminal : send "mmcli -L"
+        wwan_class <- terminal : module connect information
+        wwan_class -> wwan_class : get wwan card number
+    end
+    hardware <[#red]- wwan_class: return 0 (if no wwan card found)
+    
+    group Get wwan module's information
+        wwan_class -> terminal : send "mmcli -m <wwan card number>"
+        wwan_class <- terminal : wwan module's info
+        wwan_class -> wwan_class : get net status 
+        wwan_class -> wwan_class : get signal
+        wwan_class -> wwan_class : get sim card's phone number
+        wwan_class -> wwan_class : get sim card's operator name
+        wwan_class -> wwan_class : get sim card's connection tech
+    end
+    hardware <[#Blue]- wwan_class: return 1 (Check wwan card OK)
+end
+' hardware <- wwan_class : <font color=red><b>No wwan card found 
+' alt If found wwan module
+'     wwan_class -> terminal : 
+
+' else If not found
+'     hardware <- wwan_class : return 0
+
+' end
+
+'Call send SMS function from main
+group Send SMS Function
+    hardware -> wwan_class : call send SMS function
+    wwan_class -> terminal : create SMS messsage request
+    wwan_class <- terminal : responce for create SMS request
+    wwan_class -> terminal : send SMS request (if create OK)
+    wwan_class <- terminal : responce for send SMS request
+
+    hardware <[#red]- wwan_class : return 0 (if send SMS error)
+    hardware <[#Blue]- wwan_class : return 1 (if send SMS ok)
+    
+end
+
+@enduml
