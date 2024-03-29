@@ -1,6 +1,4 @@
-# HAVProject
-
-# Project Title
+# Handheld devices assisting people with disabilities
 
 This is Handheld devices assisting people with disabilities. The purpose of this device is to help people with disabilities freely move and participate in social activities.
 
